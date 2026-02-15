@@ -39,6 +39,10 @@ MERCHANT_RULES = {
     "Max Burgers": ("Max Burgers", "Mat ute"),
     "Dominos Pizza": ("Domino's", "Mat ute"),
     "Nebbenes Kro": ("Nebbenes Kro", "Mat ute"),
+    "Shell": ("Shell", "Mat ute"),
+    "7-eleven": ("7-Eleven", "Mat ute"),
+    "Esso": ("Esso", "Mat ute"),
+    "ST1": ("ST1", "Mat ute"),
     # Hjem
     "IKEA": ("IKEA", "Hjem"),
     "Søstrene Grene": ("Søstrene Grene", "Hjem"),
@@ -54,6 +58,7 @@ MERCHANT_RULES = {
     "Musti": ("Musti", "Hjem"),
     "Jysk": ("Jysk", "Hjem"),
     "Nille": ("Nille", "Hjem"),
+    "Sport 1": ("Sport 1", "Hjem"),
     # Netthandel
     "CDON": ("CDON", "Netthandel"),
     "Maxgaming": ("MaxGaming", "Netthandel"),
@@ -64,10 +69,7 @@ MERCHANT_RULES = {
     "Power": ("Power", "Netthandel"),
     "Xxl": ("XXL", "Netthandel"),
     "Norli": ("Norli", "Netthandel"),
-    "Zalando": ("Zalando", "Netthandel"),
-    "Bubbleroom": ("Bubbleroom", "Netthandel"),
-    "CHANGE Lingerie": ("Change", "Netthandel"),
-    "LYKO": ("Lyko", "Netthandel"),
+    "NOX PADEL": ("Nox Padel", "Netthandel"),
     # Gaming
     "Steam": ("Steam", "Gaming"),
     "discord": ("Discord", "Gaming"),
@@ -105,22 +107,20 @@ MERCHANT_RULES = {
     "Netflix": ("Netflix", "Abonnement"),
     "Disney Plus": ("Disney+", "Abonnement"),
     "storytel": ("Storytel", "Abonnement"),
+    "Mova AS": ("Mova", "Abonnement"),
     # Bil
-    "Shell": ("Shell", "Bil"),
-    "Yx 7-Eleven": ("YX 7-Eleven", "Bil"),
-    "7-eleven": ("7-Eleven", "Bil"),
     "Uno-x": ("Uno-X", "Bil"),
-    "Esso": ("Esso", "Bil"),
-    "ST1": ("ST1", "Bil"),
     "Tesla Inc": ("Tesla Lading", "Bil"),
     "IONITY": ("Ionity", "Bil"),
     "KOPLE": ("Kople", "Bil"),
     "Recharge": ("Recharge", "Bil"),
     "Easypark": ("EasyPark", "Bil"),
     "Apcoa": ("Apcoa Parking", "Bil"),
-    "Asfinag": ("Asfinag", "Bil"),
     "NORDEA FINANS": ("Nordea Finans", "Bil"),
-    "Fremtind Forsikring": ("Fremtind Forsikring", "Bil"),
+    # Forsikring
+    "Fremtind Forsikring": ("Fremtind Forsikring", "Forsikring"),
+    "GJENSIDIGE": ("Gjensidige", "Forsikring"),
+    "AGRIA": ("Agria", "Forsikring"),
     # Bolig
     "Nedbetaling": ("Nedbetaling lån", "Bolig"),
     # Boutgifter
@@ -128,10 +128,7 @@ MERCHANT_RULES = {
     "Vestre Toten Kommune": ("Vestre Toten Kommune", "Boutgifter"),
     "Ringsaker Kommune": ("Ringsaker Kommune", "Boutgifter"),
     "Globalconnect": ("Globalconnect", "Boutgifter"),
-    "Mova AS": ("Mova", "Boutgifter"),
     "VERISURE": ("Verisure", "Boutgifter"),
-    "GJENSIDIGE": ("Gjensidige", "Boutgifter"),
-    "AGRIA": ("Agria", "Boutgifter"),
     # Helse
     "Spesialistsenter": ("Moelv Spesialistsenter", "Helse"),
     "Apotek": ("Apotek 1", "Helse"),
@@ -141,6 +138,7 @@ MERCHANT_RULES = {
     "Vitus": ("Vitus Apotek", "Helse"),
     "Legesenter": ("Legesenter", "Helse"),
     "Oslo Storbylege": ("Oslo Storbylegevakt", "Helse"),
+    "Farmasiet": ("Farmasiet", "Helse"),
     # Kosmetikk
     "Cutters": ("Cutters", "Kosmetikk"),
     "Blivakker": ("BliVakker", "Kosmetikk"),
@@ -149,8 +147,11 @@ MERCHANT_RULES = {
     "NORDICFEEL": ("NordicFeel", "Kosmetikk"),
     "KICKS": ("Kicks", "Kosmetikk"),
     "Rituals": ("Rituals", "Kosmetikk"),
-    "Farmasiet": ("Farmasiet", "Kosmetikk"),
     "Feel Raufoss": ("Feel", "Kosmetikk"),
+    "Zalando": ("Zalando", "Kosmetikk"),
+    "Bubbleroom": ("Bubbleroom", "Kosmetikk"),
+    "CHANGE Lingerie": ("Change", "Kosmetikk"),
+    "LYKO": ("Lyko", "Kosmetikk"),
     # Kreditt
     "Klarna": ("Klarna", "Kreditt"),
     "Qliro": ("Qliro", "Kreditt"),
@@ -161,9 +162,9 @@ MERCHANT_RULES = {
     # Transport
     "Ruter": ("Ruter", "Transport"),
     "Entur": ("Entur", "Transport"),
-    "Posten Norge": ("Posten", "Transport"),
     "Crown Seaways": ("DFDS", "Transport"),
     "VY App": ("Vy", "Transport"),
+    "Asfinag": ("Asfinag", "Transport"),
     # Overføring
     "Overføring Innland": ("Overføring", "Overføring"),
     "Overføring ": ("Overføring", "Overføring"),
@@ -177,12 +178,11 @@ MERCHANT_RULES = {
     "ZTL PAYMENT": ("ZTL Payment", "Inntekt"),
     "LENA OG CENTRUM": ("Lena og Centrum Trafikkskole", "Inntekt"),
     # Annet
+    "Posten Norge": ("Posten", "Annet"),
     "Renter": ("Renter", "Annet"),
     "DNB Aksje": ("DNB", "Annet"),
     "Omkostninger": ("Omkostninger", "Annet"),
     "Verdipapir": ("Verdipapir", "Annet"),
-    "Sport 1": ("Sport 1", "Annet"),
-    "NOX PADEL": ("Nox Padel", "Annet"),
 }
 
 CATEGORIES = [
@@ -200,6 +200,7 @@ CATEGORIES = [
     "Bil",
     "Bolig",
     "Boutgifter",
+    "Forsikring",
     "Overføring",
     "Inntekt",
     "Annet",
