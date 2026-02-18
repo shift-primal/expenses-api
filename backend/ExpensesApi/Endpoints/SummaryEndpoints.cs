@@ -29,7 +29,7 @@ public static class SummaryEndpoints
             async (ExpensesDb db) =>
             {
                 var result = await db
-                    .Transactions.GroupBy(t => t.Category.Name)
+                    .Transactions.GroupBy(t => new { t.CategoryId, t.Category!.Name })
                     .Select(g => new
                     {
                         category = g.Key,

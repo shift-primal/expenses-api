@@ -26,9 +26,8 @@ public class CsvParser
         return new ParsedRow(date, description, amount, l);
     }
 
-    public List<ParsedRow> ParseRows(Stream stream)
+    public List<ParsedRow> ParseRows(StreamReader reader)
     {
-        using var reader = new StreamReader(stream);
         reader.ReadLine(); // Skip header
 
         var rows = new List<ParsedRow>();

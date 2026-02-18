@@ -164,7 +164,7 @@ public static class SeedData
                 new
                 {
                     Id = 106,
-                    Keyword = "Spar Lena",
+                    Keyword = "Spar",
                     CategoryId = 100,
                     Source = "seed",
                     CreatedAt = SeedDate,
@@ -196,7 +196,7 @@ public static class SeedData
                 new
                 {
                     Id = 110,
-                    Keyword = "Mix Bilit",
+                    Keyword = "Mix",
                     CategoryId = 100,
                     Source = "seed",
                     CreatedAt = SeedDate,
@@ -212,7 +212,7 @@ public static class SeedData
                 new
                 {
                     Id = 112,
-                    Keyword = "Obs Rudsh",
+                    Keyword = "Obs",
                     CategoryId = 100,
                     Source = "seed",
                     CreatedAt = SeedDate,
@@ -229,7 +229,7 @@ public static class SeedData
                 new
                 {
                     Id = 202,
-                    Keyword = "Mdc 048",
+                    Keyword = "Mdc",
                     CategoryId = 200,
                     Source = "seed",
                     CreatedAt = SeedDate,
@@ -245,7 +245,7 @@ public static class SeedData
                 new
                 {
                     Id = 204,
-                    Keyword = "BK 5079",
+                    Keyword = "BK",
                     CategoryId = 200,
                     Source = "seed",
                     CreatedAt = SeedDate,
@@ -350,14 +350,6 @@ public static class SeedData
                 {
                     Id = 217,
                     Keyword = "Hygge Gjøvik",
-                    CategoryId = 200,
-                    Source = "seed",
-                    CreatedAt = SeedDate,
-                },
-                new
-                {
-                    Id = 218,
-                    Keyword = "Kitch,n",
                     CategoryId = 200,
                     Source = "seed",
                     CreatedAt = SeedDate,
@@ -518,7 +510,7 @@ public static class SeedData
                 new
                 {
                     Id = 308,
-                    Keyword = "Kid 47",
+                    Keyword = "Kid",
                     CategoryId = 300,
                     Source = "seed",
                     CreatedAt = SeedDate,
@@ -576,6 +568,14 @@ public static class SeedData
                     Id = 315,
                     Keyword = "Sport 1",
                     CategoryId = 300,
+                    Source = "seed",
+                    CreatedAt = SeedDate,
+                },
+                new
+                {
+                    Id = 316,
+                    Keyword = "Kitch",
+                    CategoryId = 200,
                     Source = "seed",
                     CreatedAt = SeedDate,
                 },
@@ -713,7 +713,7 @@ public static class SeedData
                 new
                 {
                     Id = 602,
-                    Keyword = "tidalmusica",
+                    Keyword = "tidalmusic",
                     CategoryId = 600,
                     Source = "seed",
                     CreatedAt = SeedDate,
