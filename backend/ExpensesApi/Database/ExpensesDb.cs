@@ -9,5 +9,11 @@ public class ExpensesDb(DbContextOptions<ExpensesDb> opts) : DbContext(opts)
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         SeedData.Seed(modelBuilder);
+
+        modelBuilder.Entity<Transaction>().HasIndex(t => t.Date);
+
+        modelBuilder.Entity<Transaction>().HasIndex(t => t.CategoryId);
+
+        modelBuilder.Entity<Transaction>().HasIndex(t => t.Amount);
     }
 }

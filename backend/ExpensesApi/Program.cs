@@ -4,9 +4,18 @@ using Microsoft.EntityFrameworkCore;
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("nb-NO");
 CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("nb-NO");
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("Default");
+
+builder.Services.AddCors(opts =>
+    opts.AddPolicy(
+        name: MyAllowSpecificOrigins,
+        policy => policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod()
+    )
+);
 
 builder.Services.AddDbContext<ExpensesDb>(opt => opt.UseSqlite(connectionString));
 
@@ -21,15 +30,9 @@ var app = builder.Build();
 CategoryEndpoints.Map(app);
 CategoryRuleEndpoints.Map(app);
 TransactionEndpoints.Map(app);
+ImportEndpoints.Map(app);
 
 app.MapOpenApi();
-
-var parser = new CsvParser();
-
-var stream = File.OpenRead("../../../../Personlig/data/kasper/transactions.txt");
-var reader = new StreamReader(stream);
-var rows = parser.ParseRows(reader);
-
-Console.WriteLine(rows[1]);
+app.UseCors();
 
 app.Run();

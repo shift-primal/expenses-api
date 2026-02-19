@@ -16,6 +16,13 @@ public static class ImportEndpoints
 
                 foreach (var r in rows)
                 {
+                    var isDuplicate = await db.Transactions.AnyAsync(t =>
+                        t.Date == r.Date && t.Amount == r.Amount && t.Description == r.Description
+                    );
+
+                    if (isDuplicate)
+                        continue;
+
                     var categoryId = categorizer.Categorize(r.Description);
 
                     transactions.Add(
@@ -32,10 +39,19 @@ public static class ImportEndpoints
                     );
                 }
 
+                var result = transactions
+                    .GroupBy(t => t.CategoryId)
+                    .Select(g => new
+                    {
+                        category = g.Key,
+                        total = g.Sum(t => t.Amount),
+                        count = g.Count(),
+                    });
+
                 db.Transactions.AddRange(transactions);
                 await db.SaveChangesAsync();
 
-                return Results.Ok();
+                return Results.Ok(result);
             }
         );
 

@@ -4,7 +4,54 @@ public static class TransactionEndpoints
 {
     public static void Map(WebApplication app)
     {
-        app.MapGet("/transactions", async (ExpensesDb db) => await db.Transactions.ToListAsync());
+        app.MapGet(
+            "/transactions",
+            async (
+                Page page,
+                DateOnly? from,
+                DateOnly? to,
+                int? categoryId,
+                string? search,
+                string? sortBy,
+                string? sortDir,
+                ExpensesDb db
+            ) =>
+            {
+                var query = db.Transactions.AsQueryable();
+
+                if (from is not null)
+                    query = query.Where(t => t.Date >= from);
+
+                if (to is not null)
+                    query = query.Where(t => t.Date <= to);
+
+                if (categoryId is not null)
+                    query = query.Where(t => t.CategoryId == categoryId);
+
+                if (search is not null)
+                    query = query.Where(t => t.Description.Contains(search));
+
+                query = sortBy switch
+                {
+                    "amount" => sortDir == "desc"
+                        ? query.OrderByDescending(t => t.Amount)
+                        : query.OrderBy(t => t.Amount),
+                    "description" => sortDir == "desc"
+                        ? query.OrderByDescending(t => t.Description)
+                        : query.OrderBy(t => t.Description),
+                    _ => sortDir == "desc"
+                        ? query.OrderByDescending(t => t.Date)
+                        : query.OrderBy(t => t.Date),
+                };
+
+                var result = await query
+                    .Skip((page.CurrentPage - 1) * page.PageSize)
+                    .Take(page.PageSize)
+                    .ToListAsync();
+
+                return Results.Ok(result);
+            }
+        );
 
         app.MapGet(
             "/transactions/{id}",
@@ -25,7 +72,7 @@ public static class TransactionEndpoints
 
                 t.AccountSource = inputT.AccountSource;
                 t.Amount = inputT.Amount;
-                t.Category = inputT.Category;
+                t.CategoryId = inputT.CategoryId;
                 t.CreatedAt = inputT.CreatedAt;
                 t.Date = inputT.Date;
                 t.Description = inputT.Description;

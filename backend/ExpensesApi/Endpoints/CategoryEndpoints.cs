@@ -34,7 +34,6 @@ public static class CategoryEndpoints
 
                 c.Name = inputC.Name;
                 c.IsDefault = inputC.IsDefault;
-                c.Rules = inputC.Rules;
 
                 await db.SaveChangesAsync();
 
@@ -46,11 +45,18 @@ public static class CategoryEndpoints
             "/categories/{id}",
             async (int id, ExpensesDb db) =>
             {
-                // TODO
-                // Gjøre så transaksjoner med kategorien flyttes til "annet" først
-
                 if (await db.Categories.FindAsync(id) is Category c)
                 {
+                    // NOTE
+                    // Bytte transaksjonene til "Annet" først
+
+                    var transactions = await db
+                        .Transactions.Where(t => t.CategoryId == id)
+                        .ToListAsync();
+
+                    foreach (var t in transactions)
+                        t.CategoryId = 1800; //Annet
+
                     db.Categories.Remove(c);
                     await db.SaveChangesAsync();
                     return Results.NoContent();
