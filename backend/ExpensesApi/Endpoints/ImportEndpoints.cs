@@ -53,7 +53,7 @@ public static class ImportEndpoints
 
                 return Results.Ok(result);
             }
-        );
+        ).DisableAntiforgery();
 
         app.MapGet(
             "/import/batches",

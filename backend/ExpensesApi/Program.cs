@@ -23,7 +23,6 @@ builder.Services.AddScoped<CsvParser>();
 builder.Services.AddScoped<Categorizer>();
 
 builder.Services.AddOpenApi();
-builder.Services.AddAntiforgery();
 
 var app = builder.Build();
 
@@ -33,6 +32,6 @@ TransactionEndpoints.Map(app);
 ImportEndpoints.Map(app);
 
 app.MapOpenApi();
-app.UseCors();
+app.UseCors(MyAllowSpecificOrigins);
 
 app.Run();

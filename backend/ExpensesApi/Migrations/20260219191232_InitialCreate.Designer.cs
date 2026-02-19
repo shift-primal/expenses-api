@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpensesApi.Migrations
 {
     [DbContext(typeof(ExpensesDb))]
-    [Migration("20260217180845_InitialCreate")]
+    [Migration("20260219191232_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -219,7 +219,7 @@ namespace ExpensesApi.Migrations
                             Id = 106,
                             CategoryId = 100,
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Keyword = "Spar Lena",
+                            Keyword = "Spar",
                             Source = "seed"
                         },
                         new
@@ -251,7 +251,7 @@ namespace ExpensesApi.Migrations
                             Id = 110,
                             CategoryId = 100,
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Keyword = "Mix Bilit",
+                            Keyword = "Mix",
                             Source = "seed"
                         },
                         new
@@ -267,7 +267,7 @@ namespace ExpensesApi.Migrations
                             Id = 112,
                             CategoryId = 100,
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Keyword = "Obs Rudsh",
+                            Keyword = "Obs",
                             Source = "seed"
                         },
                         new
@@ -283,7 +283,7 @@ namespace ExpensesApi.Migrations
                             Id = 202,
                             CategoryId = 200,
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Keyword = "Mdc 048",
+                            Keyword = "Mdc",
                             Source = "seed"
                         },
                         new
@@ -299,7 +299,7 @@ namespace ExpensesApi.Migrations
                             Id = 204,
                             CategoryId = 200,
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Keyword = "BK 5079",
+                            Keyword = "BK",
                             Source = "seed"
                         },
                         new
@@ -404,14 +404,6 @@ namespace ExpensesApi.Migrations
                             CategoryId = 200,
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Keyword = "Hygge Gjøvik",
-                            Source = "seed"
-                        },
-                        new
-                        {
-                            Id = 218,
-                            CategoryId = 200,
-                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Keyword = "Kitch,n",
                             Source = "seed"
                         },
                         new
@@ -571,7 +563,7 @@ namespace ExpensesApi.Migrations
                             Id = 308,
                             CategoryId = 300,
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Keyword = "Kid 47",
+                            Keyword = "Kid",
                             Source = "seed"
                         },
                         new
@@ -628,6 +620,14 @@ namespace ExpensesApi.Migrations
                             CategoryId = 300,
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Keyword = "Sport 1",
+                            Source = "seed"
+                        },
+                        new
+                        {
+                            Id = 316,
+                            CategoryId = 200,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Keyword = "Kitch",
                             Source = "seed"
                         },
                         new
@@ -763,7 +763,7 @@ namespace ExpensesApi.Migrations
                             Id = 602,
                             CategoryId = 600,
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Keyword = "tidalmusica",
+                            Keyword = "tidalmusic",
                             Source = "seed"
                         },
                         new
@@ -1523,7 +1523,7 @@ namespace ExpensesApi.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -1538,7 +1538,11 @@ namespace ExpensesApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Amount");
+
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("Date");
 
                     b.ToTable("Transactions");
                 });

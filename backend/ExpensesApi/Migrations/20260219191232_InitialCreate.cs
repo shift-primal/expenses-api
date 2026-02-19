@@ -55,7 +55,7 @@ namespace ExpensesApi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Amount = table.Column<decimal>(type: "TEXT", nullable: false),
                     CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -110,17 +110,17 @@ namespace ExpensesApi.Migrations
                     { 103, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "REMA", "seed" },
                     { 104, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "COOP", "seed" },
                     { 105, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Bunnpris", "seed" },
-                    { 106, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Spar Lena", "seed" },
+                    { 106, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Spar", "seed" },
                     { 107, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Joker", "seed" },
                     { 108, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Matkroken", "seed" },
                     { 109, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Cc Mat", "seed" },
-                    { 110, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Mix Bilit", "seed" },
+                    { 110, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Mix", "seed" },
                     { 111, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Vinmonopolet", "seed" },
-                    { 112, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Obs Rudsh", "seed" },
+                    { 112, 100, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Obs", "seed" },
                     { 201, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Burger King", "seed" },
-                    { 202, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Mdc 048", "seed" },
+                    { 202, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Mdc", "seed" },
                     { 203, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Mcdonalds", "seed" },
-                    { 204, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "BK 5079", "seed" },
+                    { 204, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "BK", "seed" },
                     { 205, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Little Eat", "seed" },
                     { 206, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Fly Chicken", "seed" },
                     { 207, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Expressenpizza", "seed" },
@@ -134,7 +134,6 @@ namespace ExpensesApi.Migrations
                     { 215, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "foodora", "seed" },
                     { 216, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Cafe Amsterdam", "seed" },
                     { 217, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Hygge Gjøvik", "seed" },
-                    { 218, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Kitch,n", "seed" },
                     { 219, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Javel Oslo", "seed" },
                     { 220, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Totensnacks", "seed" },
                     { 221, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "King Kebap", "seed" },
@@ -154,7 +153,7 @@ namespace ExpensesApi.Migrations
                     { 305, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Jula", "seed" },
                     { 306, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Clas Ohl", "seed" },
                     { 307, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Plantasjen", "seed" },
-                    { 308, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Kid 47", "seed" },
+                    { 308, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Kid", "seed" },
                     { 309, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Europris", "seed" },
                     { 310, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Normal", "seed" },
                     { 311, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Buddy", "seed" },
@@ -162,6 +161,7 @@ namespace ExpensesApi.Migrations
                     { 313, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Jysk", "seed" },
                     { 314, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Nille", "seed" },
                     { 315, 300, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Sport 1", "seed" },
+                    { 316, 200, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Kitch", "seed" },
                     { 401, 400, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Gjøvik Kino", "seed" },
                     { 402, 400, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Norsk Tipping", "seed" },
                     { 403, 400, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Totenbadet", "seed" },
@@ -178,7 +178,7 @@ namespace ExpensesApi.Migrations
                     { 504, 500, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "jagex", "seed" },
                     { 505, 500, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "eneba", "seed" },
                     { 601, 600, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "APPLE.COM/BILL", "seed" },
-                    { 602, 600, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "tidalmusica", "seed" },
+                    { 602, 600, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "tidalmusic", "seed" },
                     { 603, 600, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Telenor", "seed" },
                     { 604, 600, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Google One", "seed" },
                     { 605, 600, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "splice", "seed" },
@@ -279,9 +279,19 @@ namespace ExpensesApi.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Transactions_Amount",
+                table: "Transactions",
+                column: "Amount");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_CategoryId",
                 table: "Transactions",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_Date",
+                table: "Transactions",
+                column: "Date");
         }
 
         /// <inheritdoc />
