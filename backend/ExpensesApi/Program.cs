@@ -35,6 +35,7 @@ CategoryEndpoints.Map(app);
 CategoryRuleEndpoints.Map(app);
 TransactionEndpoints.Map(app);
 ImportEndpoints.Map(app);
+SummaryEndpoints.Map(app);
 
 app.MapOpenApi();
 app.UseCors(MyAllowSpecificOrigins);
