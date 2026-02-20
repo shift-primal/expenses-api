@@ -5,55 +5,58 @@ public static class ImportEndpoints
     public static void Map(WebApplication app)
     {
         app.MapPost(
-            "/import",
-            async (IFormFile csv, ExpensesDb db, CsvParser parser, Categorizer categorizer) =>
-            {
-                List<Transaction> transactions = [];
-                var reader = new StreamReader(csv.OpenReadStream());
-                var rows = parser.ParseRows(reader);
-
-                var batchId = Guid.NewGuid();
-
-                foreach (var r in rows)
+                "/import",
+                async (IFormFile csv, ExpensesDb db, CsvParser parser, Categorizer categorizer) =>
                 {
-                    var isDuplicate = await db.Transactions.AnyAsync(t =>
-                        t.Date == r.Date && t.Amount == r.Amount && t.Description == r.Description
-                    );
+                    List<Transaction> transactions = [];
+                    var reader = new StreamReader(csv.OpenReadStream());
+                    var rows = parser.ParseRows(reader);
 
-                    if (isDuplicate)
-                        continue;
+                    var batchId = Guid.NewGuid();
 
-                    var categoryId = categorizer.Categorize(r.Description);
-
-                    transactions.Add(
-                        new Transaction
-                        {
-                            Date = r.Date,
-                            Description = r.Description,
-                            Amount = r.Amount,
-                            CategoryId = categoryId,
-                            ImportBatchId = batchId,
-                            RawLine = r.RawLine,
-                            CreatedAt = DateTime.UtcNow,
-                        }
-                    );
-                }
-
-                var result = transactions
-                    .GroupBy(t => t.CategoryId)
-                    .Select(g => new
+                    foreach (var r in rows)
                     {
-                        category = g.Key,
-                        total = g.Sum(t => t.Amount),
-                        count = g.Count(),
-                    });
+                        var isDuplicate = await db.Transactions.AnyAsync(t =>
+                            t.Date == r.Date
+                            && t.Amount == r.Amount
+                            && t.Description == r.Description
+                        );
 
-                db.Transactions.AddRange(transactions);
-                await db.SaveChangesAsync();
+                        if (isDuplicate)
+                            continue;
 
-                return Results.Ok(result);
-            }
-        ).DisableAntiforgery();
+                        var categoryId = categorizer.Categorize(r.Description);
+
+                        transactions.Add(
+                            new Transaction
+                            {
+                                Date = r.Date,
+                                Description = r.Description,
+                                Amount = r.Amount,
+                                CategoryId = categoryId,
+                                ImportBatchId = batchId,
+                                RawLine = r.RawLine,
+                                CreatedAt = DateTime.UtcNow,
+                            }
+                        );
+                    }
+
+                    var result = transactions
+                        .GroupBy(t => t.CategoryId)
+                        .Select(g => new
+                        {
+                            category = g.Key,
+                            total = g.Sum(t => t.Amount),
+                            count = g.Count(),
+                        });
+
+                    db.Transactions.AddRange(transactions);
+                    await db.SaveChangesAsync();
+
+                    return Results.Ok(result);
+                }
+            )
+            .DisableAntiforgery();
 
         app.MapGet(
             "/import/batches",

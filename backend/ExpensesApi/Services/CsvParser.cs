@@ -4,7 +4,9 @@ using System.Text.RegularExpressions;
 public class CsvParser
 {
     static decimal ParseAmount(string raw, bool negate) =>
-        decimal.TryParse(raw, out var r) ? (negate ? -r : r) : 0;
+        decimal.TryParse(raw, NumberStyles.Any, new CultureInfo("nb-NO"), out var r)
+            ? (negate ? -r : r)
+            : 0;
 
     static DateOnly? ParseDate(string raw) => DateOnly.TryParse(raw, out var r) ? r : null;
 

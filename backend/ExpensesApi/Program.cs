@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("nb-NO");
@@ -18,6 +19,10 @@ builder.Services.AddCors(opts =>
 );
 
 builder.Services.AddDbContext<ExpensesDb>(opt => opt.UseSqlite(connectionString));
+
+builder.Services.ConfigureHttpJsonOptions(opts =>
+    opts.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+);
 
 builder.Services.AddScoped<CsvParser>();
 builder.Services.AddScoped<Categorizer>();

@@ -45,6 +45,7 @@ public static class TransactionEndpoints
                 };
 
                 var result = await query
+                    .Include(t => t.Category)
                     .Skip(pageNumber * 25)
                     .Take(25)
                     .ToListAsync();

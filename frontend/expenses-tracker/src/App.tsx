@@ -1,24 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
+import { Route, Routes } from "react-router";
+import { HomePage } from "./pages/HomePage";
+import { ImportPage } from "./pages/ImportPage";
 
-function App() {
-  const baseUrl = "http://localhost:5071";
+const App = () => {
+  const isLoading: Boolean = false;
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: () =>
-      fetch(`${baseUrl}/transactions?pageNumber=1`).then((r) => r.json()),
-  });
+  if (isLoading) return <div>Loading...</div>;
 
   return (
-    <>
-      <button
-        className="border-2 border-red-400"
-        onClick={() => console.log(data)}
-      >
-        Hey
-      </button>
-    </>
+    <Routes>
+      <Route index element={<HomePage />} />
+      <Route path="/import" element={<ImportPage />} />
+      <Route path="*" element={<div>404</div>} />
+    </Routes>
   );
-}
+};
 
 export default App;
