@@ -9,3 +9,24 @@ export type CategorySummary = {
   total: number;
   count: number;
 };
+
+export type TotalsSummary = {
+  income: number;
+  expenses: number;
+  balance: number;
+};
+
+export type MonthSummary = {
+  month: number;
+  total: number;
+  count: number;
+};
+
+export type TransactionFilters = {
+  from?: string;
+  to?: string;
+  categoryId?: number;
+  search?: string;
+  sortBy?: string;
+  sortDir?: "asc" | "desc";
+};
