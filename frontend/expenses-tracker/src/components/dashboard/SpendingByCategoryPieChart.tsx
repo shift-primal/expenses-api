@@ -15,70 +15,62 @@ import {
   ChartTooltipContent,
   type ChartConfig
 } from "@/components/shadcn/ui/chart";
+import type { CategorySummary } from "@/types";
 
-export const description = "A simple pie chart";
+export const SpendingByCategoryPieChart = ({
+  data
+}: {
+  data: CategorySummary[];
+}) => {
+  console.log(data);
 
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" }
-];
+  const chartData = data.map((c, i) => ({
+    name: c.category.name,
+    value: Math.abs(c.total),
+    fill: `var(--chart-${(i % 5) + 1})`
+  }));
 
-const chartConfig = {
-  visitors: {
-    label: "Visitors"
-  },
-  chrome: {
-    label: "Chrome",
-    color: "var(--chart-1)"
-  },
-  safari: {
-    label: "Safari",
-    color: "var(--chart-2)"
-  },
-  firefox: {
-    label: "Firefox",
-    color: "var(--chart-3)"
-  },
-  edge: {
-    label: "Edge",
-    color: "var(--chart-4)"
-  },
-  other: {
-    label: "Other",
-    color: "var(--chart-5)"
-  }
-} satisfies ChartConfig;
+  const chartConfig = Object.fromEntries(
+    data.map((c) => [c.category.name, { label: c.category.name }])
+  ) satisfies ChartConfig;
 
-export const SpendingByCategoryPieChart = () => (
-  <Card className="flex flex-col">
-    <CardHeader className="items-center pb-0">
-      <CardTitle>Pie Chart</CardTitle>
-      <CardDescription>January - June 2024</CardDescription>
-    </CardHeader>
-    <CardContent className="flex-1 pb-0">
-      <ChartContainer
-        config={chartConfig}
-        className="mx-auto aspect-square max-h-62.5"
-      >
-        <PieChart>
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
-          />
-          <Pie data={chartData} dataKey="visitors" nameKey="browser" />
-        </PieChart>
-      </ChartContainer>
-    </CardContent>
-    <CardFooter className="flex-col gap-2 text-sm">
-      <div className="flex items-center gap-2 leading-none font-medium">
-        Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-      </div>
-      <div className="text-muted-foreground leading-none">
-        Showing total visitors for the last 6 months
-      </div>
-    </CardFooter>
-  </Card>
-);
+  console.log(chartData);
+
+  return (
+    <Card className="flex flex-col">
+      <CardHeader className="items-center pb-0">
+        <CardTitle>Kategori</CardTitle>
+        <CardDescription>January - June 2024</CardDescription>
+      </CardHeader>
+      <CardContent className="flex-1 pb-0">
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto aspect-square max-h-62.5"
+        >
+          <PieChart>
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Pie data={chartData} dataKey="value" nameKey="name" />
+          </PieChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter className="flex-col gap-2 text-sm">
+        <div className="flex items-center gap-2 leading-none font-medium">
+          <span>
+            Du brukte mest penger på{" "}
+            {data.reduce((a, b) => (a.total > b.total ? a : b)).category.name}
+          </span>
+          <TrendingUp className="h-4 w-4" />
+        </div>
+        <div className="text-muted-foreground leading-none">
+          <span>
+            Over {Math.max(...data.map((o) => o.count))} transaksjoner, brukte
+            du {Math.max(...data.map((o) => Math.abs(o.total)))}kr
+          </span>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
