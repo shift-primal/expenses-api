@@ -15,15 +15,16 @@ import {
   ChartTooltipContent,
   type ChartConfig
 } from "@/components/shadcn/ui/chart";
-import type { CategorySummary } from "@/types";
+import type { CategorySummary, MonthSummary } from "@/types";
+import { getDateRange, getMostExpensiveCategory } from "@/lib/utils";
 
-export const SpendingByCategoryPieChart = ({
-  data
+export const ByCategoryChart = ({
+  data,
+  monthData
 }: {
   data: CategorySummary[];
+  monthData: MonthSummary[];
 }) => {
-  console.log(data);
-
   const chartData = data.map((c, i) => ({
     name: c.category.name,
     value: Math.abs(c.total),
@@ -34,13 +35,21 @@ export const SpendingByCategoryPieChart = ({
     data.map((c) => [c.category.name, { label: c.category.name }])
   ) satisfies ChartConfig;
 
-  console.log(chartData);
+  const {
+    mostExpensiveCategoryName,
+    mostExpensiveCategoryTotal,
+    mostExpensiveCategoryCount
+  } = getMostExpensiveCategory(data);
+
+  const { min, max } = getDateRange(monthData);
 
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
         <CardTitle>Kategori</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>
+          {min} - {max}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -58,16 +67,13 @@ export const SpendingByCategoryPieChart = ({
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 leading-none font-medium">
-          <span>
-            Du brukte mest penger på{" "}
-            {data.reduce((a, b) => (a.total > b.total ? a : b)).category.name}
-          </span>
+          <span>Du brukte mest penger på {mostExpensiveCategoryName}</span>
           <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground leading-none">
           <span>
-            Over {Math.max(...data.map((o) => o.count))} transaksjoner, brukte
-            du {Math.max(...data.map((o) => Math.abs(o.total)))}kr
+            {`Over ${mostExpensiveCategoryCount} transaksjoner, brukte du
+            ${mostExpensiveCategoryTotal}kr`}
           </span>
         </div>
       </CardFooter>

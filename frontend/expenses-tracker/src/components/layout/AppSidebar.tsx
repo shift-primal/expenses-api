@@ -7,32 +7,28 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from "@/components/shadcn/ui/sidebar";
-import { ThemeToggle } from "@components/ui/ThemeToggle";
 import { Link } from "react-router";
 
-type Links = {
-  route: string;
-  label: string;
-};
-
-const links: Links[] = [
+const links: { route: string; label: string }[] = [
   { route: "/", label: "Home" },
   { route: "/transactions", label: "Transaksjoner" },
   { route: "/import", label: "Import" },
   { route: "/categories", label: "Kategorier" }
 ];
 
-export function AppSidebar() {
+export const AppSidebar = () => {
   return (
-    <Sidebar>
+    <Sidebar collapsible="offcanvas">
       <SidebarHeader />
       <SidebarContent>
-        <ThemeToggle />
         <SidebarMenu>
+          <span className="m-4 text-base font-semibold">Waste Tracker</span>
           {links.map((e) => (
             <SidebarMenuItem key={e.route}>
               <SidebarMenuButton asChild>
-                <Link to={e.route}>{e.label}</Link>
+                <Link to={e.route} className="mx-4">
+                  {e.label}
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
@@ -41,4 +37,4 @@ export function AppSidebar() {
       <SidebarFooter />
     </Sidebar>
   );
-}
+};

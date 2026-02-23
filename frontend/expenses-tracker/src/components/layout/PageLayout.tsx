@@ -1,16 +1,19 @@
-import { SidebarProvider, SidebarTrigger } from "../shadcn/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger
+} from "../shadcn/ui/sidebar";
 import { ThemeProvider } from "../ui/theme-provider";
 import { AppSidebar } from "./AppSidebar";
+import { SiteHeader } from "./SiteHeader";
 
 export const PageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeProvider>
       <SidebarProvider>
         <AppSidebar />
-        <main className="min-h-screen w-full flex">
-          <SidebarTrigger />
-          {children}
-        </main>
+        <SiteHeader />
+        <main className="min-h-screen w-full flex">{children}</main>
       </SidebarProvider>
     </ThemeProvider>
   );

@@ -47,16 +47,26 @@ public static class SummaryEndpoints
             async (ExpensesDb db) =>
             {
                 var result = await db
-                    .Transactions.GroupBy(t => t.Date.Month)
+                    .Transactions.GroupBy(t => new { t.Date.Year, t.Date.Month })
                     .Select(g => new
                     {
-                        month = g.Key,
+                        year = g.Key.Year,
+                        month = g.Key.Month,
                         total = g.Sum(t => t.Amount),
                         count = g.Count(),
                     })
+                    .OrderBy(g => g.year)
+                    .ThenBy(g => g.month)
                     .ToListAsync();
 
-                return Results.Ok(result);
+                var formatted = result.Select(g => new
+                {
+                    date = $"{g.year}-{g.month:D2}",
+                    g.total,
+                    g.count,
+                });
+
+                return Results.Ok(formatted);
             }
         );
     }
