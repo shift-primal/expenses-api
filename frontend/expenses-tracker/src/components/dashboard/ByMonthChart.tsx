@@ -35,9 +35,9 @@ export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Area Chart - Linear</CardTitle>
+        <CardTitle>Pr. Måned</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          {min} - {max}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -79,14 +79,12 @@ export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
           <div className="grid gap-2">
             <div className="flex items-center gap-2 leading-none font-medium">
               <span>
-                {`Din dyreste mnd var ${expensiveMonthDate}, med ${expensiveMonthTotal}kr`}
-                <TrendingUp className="h-4 w-4" />
+                {`Din dyreste måned var ${expensiveMonthDate} `}
+                <TrendingUp className="h-4 w-4 inline" />
               </span>
             </div>
             <div className="text-muted-foreground flex items-center gap-2 leading-none">
-              <span>
-                Fra {min} til {max}
-              </span>
+              <span>{`Da brukte du ${expensiveMonthTotal}kr`}</span>
             </div>
           </div>
         </div>

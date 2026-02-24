@@ -23,7 +23,7 @@ export const CsvUpload = () => {
   return (
     <div
       id="upload-section"
-      className="border-2 border-black flex w-max h-max p-12 self-center mx-auto flex-col gap-y-8"
+      className="border-2 border-black flex w-max h-max p-12 self-center mx-auto flex-col gap-y-8 ring-foreground/10 bg-card text-card-foreground"
     >
       <Field>
         <FieldLabel htmlFor="file-upload">Last opp fil...</FieldLabel>
