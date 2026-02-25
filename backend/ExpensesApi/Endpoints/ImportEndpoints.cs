@@ -35,7 +35,6 @@ public static class ImportEndpoints
                                 Amount = r.Amount,
                                 CategoryId = categoryId,
                                 ImportBatchId = batchId,
-                                RawLine = r.RawLine,
                                 CreatedAt = DateTime.UtcNow,
                             }
                         );

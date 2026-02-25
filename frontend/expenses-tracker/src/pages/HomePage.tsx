@@ -1,6 +1,6 @@
-import { ByCategoryChart } from "@/components/dashboard/ByCategoryChart";
-import { ByMonthChart } from "@/components/dashboard/ByMonthChart";
-import { TotalsSummary } from "@/components/dashboard/TotalsCards";
+import { ByMonthChart } from "@/components/dashboard/LineByMonthChart";
+import { PieByCategoryChart } from "@/components/dashboard/PieByCategoryChart";
+import { TotalsSummary } from "@/components/dashboard/TotalsSummary";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { useSummary } from "@/hooks/useSummary";
 import type { Totals, CategorySummary, MonthSummary } from "@/types";
@@ -13,22 +13,35 @@ export const HomePage = () => {
   const { data: byMonth, isLoading: monthLoading } =
     useSummary<MonthSummary[]>("by-month");
 
-  if (
+  const isLoading =
     totalsLoading ||
-    !totals ||
     categoryLoading ||
-    !byCategory ||
+    byCategory?.length == 0 ||
     monthLoading ||
-    !byMonth
-  )
-    return <h1>Loading</h1>;
+    byMonth?.length == 0;
+
+  if (isLoading || !totals || !byCategory || !byMonth)
+    return (
+      <PageLayout>
+        <h1>Loading...</h1>
+      </PageLayout>
+    );
 
   return (
     <PageLayout>
-      <div className="flex flex-1 flex-col gap-4 p-4">
-        <TotalsSummary data={totals} />
-        <ByCategoryChart data={byCategory} monthData={byMonth} />
-        <ByMonthChart data={byMonth} />
+      <div className="flex flex-1 flex-col">
+        <div className="@container/main flex flex-1 flex-col gap-2 p-4">
+          <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+            <TotalsSummary data={totals} />
+            <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:shadow-xs lg:px-6  @5xl/main:grid-cols-2">
+              <PieByCategoryChart
+                categoryData={byCategory}
+                monthData={byMonth}
+              />
+              <ByMonthChart data={byMonth} />
+            </div>
+          </div>
+        </div>
       </div>
     </PageLayout>
   );

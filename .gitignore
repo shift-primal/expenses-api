@@ -29,6 +29,7 @@ artifacts/
 *.db
 *.db-shm
 *.db-wal
+Migrations/
 
 # === React / Vite ===
 node_modules/
@@ -37,6 +38,10 @@ build/
 *.local
 .env
 .env.*
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+frontend/expenses-tracker/.gitignore
 
 # === Python ===
 __pycache__/

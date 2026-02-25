@@ -1,6 +1,12 @@
 import type { components } from "@/api/auto_types";
 
+// Auto types
+
 export type Transaction = components["schemas"]["Transaction"];
+export type Category = components["schemas"]["Category"];
+export type CategoryRule = components["schemas"]["CategoryRule"];
+
+// Manual types
 
 export type Totals = {
   income: number;
@@ -14,15 +20,13 @@ export type CategorySummary = {
   count: number;
 };
 
-export type Category = components["schemas"]["Category"];
-
-export type CategoryRule = components["schemas"]["CategoryRule"];
-
 export type MonthSummary = {
   date: string;
   total: number;
   count: number;
 };
+
+// Client-side types
 
 export type TransactionFilters = {
   from?: string;

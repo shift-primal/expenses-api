@@ -71,7 +71,6 @@ public static class TransactionEndpoints
                 if (t is null)
                     return Results.NotFound();
 
-                t.AccountSource = inputT.AccountSource;
                 t.Amount = inputT.Amount;
                 t.CategoryId = inputT.CategoryId;
                 t.CreatedAt = inputT.CreatedAt;

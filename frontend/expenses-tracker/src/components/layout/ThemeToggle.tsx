@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/shadcn/ui/dropdown-menu";
-import { useTheme } from "@/components/ui/theme-provider";
+import { useTheme } from "@/components/layout/ThemeProvider";
 
 export const ThemeToggle = () => {
   const { setTheme } = useTheme();

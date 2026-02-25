@@ -16,9 +16,11 @@ const links: { route: string; label: string }[] = [
   { route: "/categories", label: "Kategorier" }
 ];
 
-export const AppSidebar = () => {
+export const AppSidebar = ({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) => {
   return (
-    <Sidebar collapsible="offcanvas">
+    <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader />
       <SidebarContent>
         <SidebarMenu>
