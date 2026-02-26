@@ -1,4 +1,4 @@
-import { SidebarInset, SidebarProvider } from "../shadcn/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@shadcn/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { SiteHeader } from "./SiteHeader";
 

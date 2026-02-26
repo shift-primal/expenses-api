@@ -4,8 +4,8 @@ import "@css/globals.css";
 import App from "@/App.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router";
-import { ThemeProvider } from "./components/layout/ThemeProvider";
-import { TooltipProvider } from "./components/shadcn/ui/tooltip";
+import { ThemeProvider } from "@layout/ThemeProvider";
+import { TooltipProvider } from "@shadcn/ui/tooltip";
 
 const queryClient = new QueryClient();
 

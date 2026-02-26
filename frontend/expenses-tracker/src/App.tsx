@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router";
-import { HomePage } from "./pages/HomePage";
-import { ImportPage } from "./pages/ImportPage";
-import { NotFoundPage } from "./pages/NotFoundPage";
+import { HomePage } from "@pages/HomePage";
+import { ImportPage } from "@pages/ImportPage";
+import { NotFoundPage } from "@pages/NotFoundPage";
 
 const App = () => {
   return (

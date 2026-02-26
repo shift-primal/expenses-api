@@ -6,7 +6,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem
-} from "@/components/shadcn/ui/sidebar";
+} from "@shadcn/ui/sidebar";
 import { Link } from "react-router";
 
 const links: { route: string; label: string }[] = [

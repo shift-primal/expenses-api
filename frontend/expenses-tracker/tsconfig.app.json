@@ -29,7 +29,13 @@
       "@components/*": ["src/components/*"],
       "@css/*": ["src/css/*"],
       "@pages/*": ["src/pages/*"],
-      "@types/*": ["src/types/*"]
+      "@types": ["src/types.ts"],
+      "@shadcn/*": ["src/components/shadcn/*"],
+      "@lib/*": ["src/lib/*"],
+      "@charts/*": ["src/components/dashboard/charts/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@api/*": ["src/api/*"],
+      "@layout/*": ["src/components/layout/*"]
     }
   },
   "include": ["src"]

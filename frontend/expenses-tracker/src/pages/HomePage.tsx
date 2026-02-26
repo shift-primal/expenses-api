@@ -1,9 +1,9 @@
-import { ByMonthChart } from "@/components/dashboard/LineByMonthChart";
-import { PieByCategoryChart } from "@/components/dashboard/PieByCategoryChart";
-import { TotalsSummary } from "@/components/dashboard/TotalsSummary";
-import { PageLayout } from "@/components/layout/PageLayout";
-import { useSummary } from "@/hooks/useSummary";
-import type { Totals, CategorySummary, MonthSummary } from "@/types";
+import { ByMonthChart } from "@charts/LineByMonthChart";
+import { PieByCategoryChart } from "@charts/PieByCategoryChart";
+import { TotalsSummary } from "@components/dashboard/TotalsSummary";
+import { PageLayout } from "@layout/PageLayout";
+import { useSummary } from "@hooks/useSummary";
+import type { Totals, CategorySummary, MonthSummary } from "@types";
 
 export const HomePage = () => {
   const { data: totals, isLoading: totalsLoading } =

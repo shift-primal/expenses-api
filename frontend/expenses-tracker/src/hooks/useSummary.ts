@@ -1,4 +1,4 @@
-import { client } from "@/api/client";
+import { client } from "@api/client";
 import { useQuery } from "@tanstack/react-query";
 
 export const useSummary = <T>(filter: string) => {

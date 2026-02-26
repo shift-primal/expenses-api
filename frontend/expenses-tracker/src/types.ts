@@ -12,6 +12,7 @@ export type Totals = {
   income: number;
   expenses: number;
   balance: number;
+  spart: number;
 };
 
 export type CategorySummary = {

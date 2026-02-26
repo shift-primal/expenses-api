@@ -1,11 +1,7 @@
-import { Button } from "@/components/shadcn/ui/button";
-import {
-  Field,
-  FieldDescription,
-  FieldLabel
-} from "@/components/shadcn/ui/field";
-import { Input } from "@/components/shadcn/ui/input";
-import { useImport } from "@/hooks/useImport";
+import { Button } from "@shadcn/ui/button";
+import { Field, FieldDescription, FieldLabel } from "@shadcn/ui/field";
+import { Input } from "@shadcn/ui/input";
+import { useImport } from "@hooks/useImport";
 import { useState } from "react";
 
 export const CsvUpload = () => {

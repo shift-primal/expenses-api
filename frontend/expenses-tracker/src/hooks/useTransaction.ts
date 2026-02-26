@@ -1,5 +1,5 @@
-import { client } from "@/api/client";
-import type { Transaction } from "@/types";
+import { client } from "@api/client";
+import type { Transaction } from "@types";
 import { useQuery } from "@tanstack/react-query";
 
 export const useTransactions = (pageNumber: number) => {

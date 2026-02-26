@@ -5,10 +5,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from "@/components/shadcn/ui/card";
-import type { Totals } from "@/types";
-import { Equal, Minus, Plus } from "lucide-react";
-import { Badge } from "../shadcn/ui/badge";
+} from "@shadcn/ui/card";
+import type { Totals } from "@types";
+import { Minus, Equal, PiggyBank, Plus } from "lucide-react";
+import { Badge } from "@shadcn/ui/badge";
 
 const cardData = {
   income: {
@@ -16,28 +16,32 @@ const cardData = {
     icon: {
       component: <Plus />,
       color: "bg-green-400"
-    }
+    },
+    explanation: "Totalt inn på konto"
   },
   expenses: {
     label: "Ut fra konto",
     icon: {
       component: <Minus />,
       color: "bg-red-400"
-    }
+    },
+    explanation: "Totalt ut fra konto"
   },
   balance: {
     label: "Total balanse",
     icon: {
       component: <Equal />,
       color: "bg-yellow-400"
-    }
+    },
+    explanation: "Total sum"
   },
-  placeholder: {
-    label: "Røyk",
+  saved: {
+    label: "Spart",
     icon: {
-      component: <Equal />,
-      color: "bg-yellow-purple-400"
-    }
+      component: <PiggyBank />,
+      color: "bg-blue-400"
+    },
+    explanation: "Prosent av inn som forble på konto"
   }
 };
 
@@ -52,7 +56,7 @@ const TotalsCard = ({
     <CardHeader>
       <CardDescription>{cardData[type].label}</CardDescription>
       <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-        {value}
+        {type === "saved" ? `${value}%` : `${value}kr`}
       </CardTitle>
       <CardAction>
         <Badge variant="outline" className={cardData[type].icon.color}>
@@ -63,21 +67,22 @@ const TotalsCard = ({
 
     <CardFooter className="flex-col items-start gap-1.5 text-sm">
       <div className="line-clamp-1 flex gap-2 font-medium">
-        Trending up this month
+        {cardData[type].explanation}
       </div>
-      <div className="text-muted-foreground">Hey</div>
     </CardFooter>
   </Card>
 );
 
-export const TotalsSummary = ({ data }: { data: Totals }) => (
-  <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-    {Object.entries(data).map(([type, value]) => (
-      <TotalsCard
-        key={type}
-        type={type as keyof typeof cardData}
-        value={value as number}
-      />
-    ))}
-  </div>
-);
+export const TotalsSummary = ({ data }: { data: Totals }) => {
+  return (
+    <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+      {Object.entries(data).map(([type, value]) => (
+        <TotalsCard
+          key={type}
+          type={type as keyof typeof cardData}
+          value={value as number}
+        />
+      ))}
+    </div>
+  );
+};

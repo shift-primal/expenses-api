@@ -13,12 +13,16 @@ public static class SummaryEndpoints
                     .Transactions.Where(t => t.Amount < 0)
                     .SumAsync(t => t.Amount);
 
+                var balance = income + expenses;
+                var saved = Decimal.ToInt32((balance / income) * 100);
+
                 return Results.Ok(
                     new
                     {
                         income,
                         expenses,
-                        balance = income + expenses,
+                        balance,
+                        saved,
                     }
                 );
             }

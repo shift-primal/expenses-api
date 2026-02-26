@@ -1,4 +1,4 @@
-import { PageLayout } from "@/components/layout/PageLayout";
+import { PageLayout } from "@layout/PageLayout";
 import { Link } from "react-router";
 
 export const NotFoundPage = () => {

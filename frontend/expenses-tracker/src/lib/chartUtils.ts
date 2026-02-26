@@ -1,4 +1,4 @@
-import type { CategorySummary, MonthSummary } from "@/types";
+import type { CategorySummary, MonthSummary } from "@types";
 
 const fmt = (date: string) =>
   new Date(`${date}-01`).toLocaleDateString("nb-NO", {

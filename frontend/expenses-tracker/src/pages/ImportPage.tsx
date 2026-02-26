@@ -1,5 +1,5 @@
-import { CsvUpload } from "@/components/import/CsvUpload";
-import { PageLayout } from "@/components/layout/PageLayout";
+import { CsvUpload } from "@components/import/CsvUpload";
+import { PageLayout } from "@layout/PageLayout";
 
 export const ImportPage = () => {
   return (

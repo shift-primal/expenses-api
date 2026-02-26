@@ -1,5 +1,5 @@
 import { TrendingUp } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Pie, PieChart } from "recharts";
 
 import {
   Card,
@@ -9,53 +9,73 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from "@/components/shadcn/ui/card";
+} from "@shadcn/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig
-} from "@/components/shadcn/ui/chart";
-import type { MonthSummary } from "@/types";
-import { getDateRange, getMostExpensiveMonth } from "@/lib/chartUtils";
-import { useIsMobile } from "@/hooks/use-mobile";
+} from "@shadcn/ui/chart";
+import type { CategorySummary, MonthSummary } from "@types";
+import { getDateRange, getMostExpensiveCategory } from "@lib/chartUtils";
+import { useIsMobile } from "@hooks/useIsMobile";
 import { useEffect, useState } from "react";
-import { ToggleGroup, ToggleGroupItem } from "../shadcn/ui/toggle-group";
+import {
+  ToggleGroup,
+  ToggleGroupItem
+} from "@components/shadcn/ui/toggle-group";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from "../shadcn/ui/select";
+} from "@components/shadcn/ui/select";
 
-export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
-  const chartData = data.map((s) => ({
-    date: Date.parse(`${s.date}-01`),
-    value: Math.abs(s.total)
+export const PieByCategoryChart = ({
+  categoryData,
+  monthData
+}: {
+  categoryData: CategorySummary[];
+  monthData: MonthSummary[];
+}) => {
+  const chartData = categoryData.map((c, i) => ({
+    name: c.category.name,
+    value: Math.abs(c.total),
+    fill: `var(--chart-${(i % 5) + 1})`
   }));
 
   const chartConfig = Object.fromEntries(
-    data.map((c) => [c.date, { label: c.date, color: "var(--chart-1)" }])
+    categoryData.map((c) => [c.category.name, { label: c.category.name }])
   ) satisfies ChartConfig;
 
-  const { min, max, diffInDays } = getDateRange(data);
-  const { expensiveMonthDate, expensiveMonthTotal } =
-    getMostExpensiveMonth(data);
+  const {
+    mostExpensiveCategoryName,
+    mostExpensiveCategoryTotal,
+    mostExpensiveCategoryCount
+  } = getMostExpensiveCategory(categoryData);
+
+  const { min, max, diffInDays } = getDateRange(monthData);
 
   const isMobile = useIsMobile();
-  const [timeRange, setTimeRange] = useState(`${diffInDays}d`);
+  const [timeRange, setTimeRange] = useState({
+    min,
+    max,
+    range: `${diffInDays}d`
+  });
 
   useEffect(() => {
     if (isMobile) {
-      setTimeRange("7d");
+      setTimeRange((p) => {
+        return { ...p, range: "7d" };
+      });
     }
   }, [isMobile]);
 
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Pr. Måned</CardTitle>
+        <CardTitle>Kategori</CardTitle>
         <CardDescription>
           <span>
             {min} - {max}
@@ -64,8 +84,12 @@ export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
         <CardAction>
           <ToggleGroup
             type="single"
-            value={timeRange}
-            onValueChange={setTimeRange}
+            value={timeRange.range}
+            onValueChange={(v) =>
+              setTimeRange((p) => {
+                return { ...p, range: v };
+              })
+            }
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:px-4! @[767px]/card:flex"
           >
@@ -73,7 +97,14 @@ export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
             <ToggleGroupItem value="30d">Siste måned</ToggleGroupItem>
             <ToggleGroupItem value="7d">Siste uke</ToggleGroupItem>
           </ToggleGroup>
-          <Select value={timeRange} onValueChange={setTimeRange}>
+          <Select
+            value={timeRange.range}
+            onValueChange={(v) =>
+              setTimeRange((p) => {
+                return { ...p, range: v };
+              })
+            }
+          >
             <SelectTrigger
               className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=selectvalue]:truncate @[767px]/card:hidden"
               size="sm"
@@ -100,7 +131,7 @@ export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
           config={chartConfig}
           className="aspect-auto h-62.5 w-full"
         >
-          <AreaChart
+          <PieChart
             accessibilityLayer
             data={chartData}
             margin={{
@@ -108,33 +139,12 @@ export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
               right: 12
             }}
           >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(date) =>
-                new Date(date).toLocaleDateString("nb-NO", { month: "short" })
-              }
-            />
             <ChartTooltip
               cursor={false}
-              content={
-                <ChartTooltipContent
-                  indicator="dot"
-                  formatter={(value) => `${value}kr brukt`}
-                />
-              }
+              content={<ChartTooltipContent hideLabel />}
             />
-            <Area
-              dataKey="value"
-              type="linear"
-              fill="var(--chart-3)"
-              stroke="var(--chart-1)"
-              stackId="a"
-            />
-          </AreaChart>
+            <Pie data={chartData} dataKey="value" nameKey="name" />
+          </PieChart>
         </ChartContainer>
       </CardContent>
       <CardFooter>
@@ -142,12 +152,15 @@ export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
           <div className="grid gap-2">
             <div className="flex items-center gap-2 leading-none font-medium">
               <span>
-                {`Din dyreste måned var ${expensiveMonthDate} `}
+                {`Du brukte mest penger på ${mostExpensiveCategoryName} `}
                 <TrendingUp className="h-4 w-4 inline" />
               </span>
             </div>
             <div className="text-muted-foreground flex items-center gap-2 leading-none">
-              <span>{`Da brukte du ${expensiveMonthTotal}kr`}</span>
+              <span>
+                {`Over ${mostExpensiveCategoryCount} transaksjoner, brukte du
+            ${mostExpensiveCategoryTotal}kr`}
+              </span>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
-import { SidebarTrigger } from "../shadcn/ui/sidebar";
-import { ThemeToggle } from "../layout/ThemeToggle";
-import { Separator } from "../shadcn/ui/separator";
-import { Button } from "../shadcn/ui/button";
+import { SidebarTrigger } from "@shadcn/ui/sidebar";
+import { ThemeToggle } from "@components/layout/ThemeToggle";
+import { Separator } from "@shadcn/ui/separator";
+import { Button } from "@shadcn/ui/button";
 
 export const SiteHeader = () => (
   <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
