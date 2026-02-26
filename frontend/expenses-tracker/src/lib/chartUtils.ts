@@ -1,21 +1,30 @@
-import type { CategorySummary, MonthSummary } from "@types";
+import type { Category, CategorySummary, MonthSummary } from "@types";
 
-const fmt = (date: string) =>
+const fmtDateToString = (date: string) =>
   new Date(`${date}-01`).toLocaleDateString("nb-NO", {
     month: "short",
     year: "2-digit"
   });
 
-const fmtFull = (date: string) => new Date(`${date}-01`);
+const fmtDate = (date: string) => new Date(`${date}-01`);
+
+const fmtCurrency = (amount: string | number) => {
+  return new Intl.NumberFormat("nb-NO", {
+    style: "currency",
+    currency: "NOK"
+  }).format(typeof amount === "string" ? parseFloat(amount) : amount);
+};
+
+const getCategoryName = (c: Category) => c.name;
 
 const getDateRange = (summary: MonthSummary[]) => {
   const min = summary.reduce((a, b) => (a.date < b.date ? a : b)).date;
   const max = summary.reduce((a, b) => (a.date > b.date ? a : b)).date;
   const diffInDays = Math.round(
-    (fmtFull(max).getTime() - fmtFull(min).getTime()) / (1000 * 60 * 60 * 24)
+    (fmtDate(max).getTime() - fmtDate(min).getTime()) / (1000 * 60 * 60 * 24)
   );
 
-  return { min: fmt(min), max: fmt(min), diffInDays };
+  return { min: fmtDateToString(min), max: fmtDateToString(min), diffInDays };
 };
 
 const getMostExpensiveCategory = (data: CategorySummary[]) => {
@@ -36,9 +45,15 @@ const getMostExpensiveMonth = (summary: MonthSummary[]) => {
   );
 
   return {
-    expensiveMonthDate: fmt(mostExpensiveMonth.date),
+    expensiveMonthDate: fmtDateToString(mostExpensiveMonth.date),
     expensiveMonthTotal: Math.abs(mostExpensiveMonth.total)
   };
 };
 
-export { getDateRange, getMostExpensiveCategory, getMostExpensiveMonth };
+export {
+  getDateRange,
+  getMostExpensiveCategory,
+  getMostExpensiveMonth,
+  fmtCurrency,
+  getCategoryName
+};

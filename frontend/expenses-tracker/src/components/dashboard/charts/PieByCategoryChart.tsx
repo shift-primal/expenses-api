@@ -17,7 +17,11 @@ import {
   type ChartConfig
 } from "@shadcn/ui/chart";
 import type { CategorySummary, MonthSummary } from "@types";
-import { getDateRange, getMostExpensiveCategory } from "@lib/chartUtils";
+import {
+  fmtCurrency,
+  getDateRange,
+  getMostExpensiveCategory
+} from "@lib/chartUtils";
 import { useIsMobile } from "@hooks/useIsMobile";
 import { useEffect, useState } from "react";
 import {
@@ -159,7 +163,7 @@ export const PieByCategoryChart = ({
             <div className="text-muted-foreground flex items-center gap-2 leading-none">
               <span>
                 {`Over ${mostExpensiveCategoryCount} transaksjoner, brukte du
-            ${mostExpensiveCategoryTotal}kr`}
+            ${fmtCurrency(mostExpensiveCategoryTotal)}`}
               </span>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { TotalsSummary } from "@components/dashboard/TotalsSummary";
 import { PageLayout } from "@layout/PageLayout";
 import { useSummary } from "@hooks/useSummary";
 import type { Totals, CategorySummary, MonthSummary } from "@types";
+import { useTransactions } from "@hooks/useTransaction";
 
 export const HomePage = () => {
   const { data: totals, isLoading: totalsLoading } =
@@ -12,13 +13,17 @@ export const HomePage = () => {
     useSummary<CategorySummary[]>("by-category");
   const { data: byMonth, isLoading: monthLoading } =
     useSummary<MonthSummary[]>("by-month");
+  const { data: transactions, isLoading: transactionsLoading } =
+    useTransactions(0);
 
   const isLoading =
     totalsLoading ||
     categoryLoading ||
     byCategory?.length == 0 ||
     monthLoading ||
-    byMonth?.length == 0;
+    byMonth?.length == 0 ||
+    transactionsLoading ||
+    transactions?.length == 0;
 
   if (isLoading || !totals || !byCategory || !byMonth)
     return (
@@ -26,6 +31,8 @@ export const HomePage = () => {
         <h1>Loading...</h1>
       </PageLayout>
     );
+
+  console.log(transactions);
 
   return (
     <PageLayout>

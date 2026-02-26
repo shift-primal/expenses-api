@@ -9,6 +9,7 @@ import {
 import type { Totals } from "@types";
 import { Minus, Equal, PiggyBank, Plus } from "lucide-react";
 import { Badge } from "@shadcn/ui/badge";
+import { fmtCurrency } from "@lib/chartUtils";
 
 const cardData = {
   income: {
@@ -56,7 +57,7 @@ const TotalsCard = ({
     <CardHeader>
       <CardDescription>{cardData[type].label}</CardDescription>
       <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-        {type === "saved" ? `${value}%` : `${value}kr`}
+        {type === "saved" ? `${value}%` : `${fmtCurrency(value)}`}
       </CardTitle>
       <CardAction>
         <Badge variant="outline" className={cardData[type].icon.color}>

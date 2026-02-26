@@ -17,7 +17,11 @@ import {
   type ChartConfig
 } from "@shadcn/ui/chart";
 import type { MonthSummary } from "@types";
-import { getDateRange, getMostExpensiveMonth } from "@lib/chartUtils";
+import {
+  fmtCurrency,
+  getDateRange,
+  getMostExpensiveMonth
+} from "@lib/chartUtils";
 import { useIsMobile } from "@hooks/useIsMobile";
 import { useEffect, useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@shadcn/ui/toggle-group";
@@ -123,7 +127,7 @@ export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
               content={
                 <ChartTooltipContent
                   indicator="dot"
-                  formatter={(value) => `${value}kr brukt`}
+                  formatter={(value) => `${fmtCurrency(value as number)} brukt`}
                 />
               }
             />
@@ -147,7 +151,7 @@ export const ByMonthChart = ({ data }: { data: MonthSummary[] }) => {
               </span>
             </div>
             <div className="text-muted-foreground flex items-center gap-2 leading-none">
-              <span>{`Da brukte du ${expensiveMonthTotal}kr`}</span>
+              <span>{`Da brukte du ${fmtCurrency(expensiveMonthTotal)}`}</span>
             </div>
           </div>
         </div>
