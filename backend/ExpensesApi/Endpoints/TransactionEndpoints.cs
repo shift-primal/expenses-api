@@ -7,7 +7,7 @@ public static class TransactionEndpoints
         app.MapGet(
             "/transactions",
             async (
-                int pageNumber,
+                int page,
                 DateOnly? from,
                 DateOnly? to,
                 int? categoryId,
@@ -50,7 +50,7 @@ public static class TransactionEndpoints
 
                 var result = await query
                     .Include(t => t.Category)
-                    .Skip(pageNumber * 25)
+                    .Skip(page * 25)
                     .Take(25)
                     .ToListAsync();
 

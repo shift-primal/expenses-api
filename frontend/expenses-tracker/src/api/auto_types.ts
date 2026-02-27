@@ -132,6 +132,7 @@ export interface paths {
           from?: string;
           to?: string;
           categoryId?: number | string;
+          merchant?: string;
           search?: string;
           sortBy?: string;
           sortDir?: string;
@@ -233,6 +234,46 @@ export interface paths {
       };
     };
   };
+  "/import/batches/clearall": {
+    delete: {
+      responses: {
+        /** @description OK */
+        200: {
+          content: never;
+        };
+      };
+    };
+  };
+  "/summary/totals": {
+    get: {
+      responses: {
+        /** @description OK */
+        200: {
+          content: never;
+        };
+      };
+    };
+  };
+  "/summary/by-category": {
+    get: {
+      responses: {
+        /** @description OK */
+        200: {
+          content: never;
+        };
+      };
+    };
+  };
+  "/summary/by-month": {
+    get: {
+      responses: {
+        /** @description OK */
+        200: {
+          content: never;
+        };
+      };
+    };
+  };
 }
 
 export type webhooks = Record<string, never>;
@@ -261,8 +302,8 @@ export interface components {
     /** Format: binary */
     IFormFile: string;
     Transaction: {
-      /** Format: int32 */
-      id?: number | string;
+      /** Format: uuid */
+      id?: string;
       /** Format: date */
       date?: string;
       description: string;
@@ -271,10 +312,9 @@ export interface components {
       /** Format: int32 */
       categoryId?: number | string;
       category?: null | components["schemas"]["Category"];
-      accountSource?: string;
+      merchant: string;
       /** Format: uuid */
       importBatchId?: string;
-      rawLine?: null | string;
       /** Format: date-time */
       createdAt?: string;
     };
