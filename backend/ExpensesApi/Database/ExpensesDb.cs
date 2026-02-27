@@ -14,6 +14,8 @@ public class ExpensesDb(DbContextOptions<ExpensesDb> opts) : DbContext(opts)
 
         modelBuilder.Entity<Transaction>().HasIndex(t => t.CategoryId);
 
+        modelBuilder.Entity<Transaction>().HasIndex(t => t.Merchant);
+
         modelBuilder.Entity<Transaction>().HasIndex(t => t.Amount);
     }
 }

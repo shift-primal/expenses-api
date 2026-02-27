@@ -32,6 +32,7 @@ public static class ImportEndpoints
                             {
                                 Date = r.Date,
                                 Description = r.Description,
+                                Merchant = r.Merchant,
                                 Amount = r.Amount,
                                 CategoryId = categoryId,
                                 ImportBatchId = batchId,
@@ -85,6 +86,19 @@ public static class ImportEndpoints
                     return Results.NotFound();
 
                 db.Transactions.RemoveRange(g);
+                await db.SaveChangesAsync();
+
+                return Results.NoContent();
+            }
+        );
+
+        app.MapDelete(
+            "/import/batches/clearall",
+            async (ExpensesDb db) =>
+            {
+                var all = await db.Transactions.ToListAsync();
+
+                db.Transactions.RemoveRange(all);
                 await db.SaveChangesAsync();
 
                 return Results.NoContent();

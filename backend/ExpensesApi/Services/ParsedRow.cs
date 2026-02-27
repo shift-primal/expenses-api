@@ -1,1 +1,1 @@
-public record ParsedRow(DateOnly Date, string Description, decimal Amount, string? RawLine);
+public record ParsedRow(DateOnly Date, string Description, string Merchant, decimal Amount);

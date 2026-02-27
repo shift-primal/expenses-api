@@ -11,6 +11,7 @@ public static class TransactionEndpoints
                 DateOnly? from,
                 DateOnly? to,
                 int? categoryId,
+                string? merchant,
                 string? search,
                 string? sortBy,
                 string? sortDir,
@@ -27,6 +28,9 @@ public static class TransactionEndpoints
 
                 if (categoryId is not null)
                     query = query.Where(t => t.CategoryId == categoryId);
+
+                if (merchant is not null)
+                    query = query.Where(t => t.Merchant.Contains(merchant));
 
                 if (search is not null)
                     query = query.Where(t => t.Description.Contains(search));
@@ -76,6 +80,7 @@ public static class TransactionEndpoints
                 t.CreatedAt = inputT.CreatedAt;
                 t.Date = inputT.Date;
                 t.Description = inputT.Description;
+                t.Merchant = inputT.Merchant;
 
                 await db.SaveChangesAsync();
 
