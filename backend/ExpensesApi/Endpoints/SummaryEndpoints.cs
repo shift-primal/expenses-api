@@ -14,7 +14,7 @@ public static class SummaryEndpoints
                     .SumAsync(t => t.Amount);
 
                 var balance = income + expenses;
-                var saved = Decimal.ToInt32((balance / income) * 100);
+                var saved = Math.Round((balance / income * 100), 1);
 
                 return Results.Ok(
                     new

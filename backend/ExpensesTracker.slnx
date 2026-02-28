@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ExpensesApi.Tests/ExpensesApi.Tests.csproj" />
+  <Project Path="ExpensesApi/ExpensesApi.csproj" />
+</Solution>

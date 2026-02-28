@@ -10,7 +10,7 @@ public static class ImportEndpoints
                 {
                     List<Transaction> transactions = [];
                     var reader = new StreamReader(csv.OpenReadStream());
-                    var rows = parser.ParseRows(reader);
+                    var rows = parser.Parse(reader);
 
                     var batchId = Guid.NewGuid();
 

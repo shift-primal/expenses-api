@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 public static class MerchantParser
 {
-    public static string Parse(string raw)
+    public static string ParseDnb(string raw)
     {
         var visaNew = Regex.Match(raw, @"^Visa\s+\d+\s{2,}(?:[A-Za-z]{2,3}\s+[\d,]+\s+)?(.+)$");
         if (visaNew.Success)
@@ -48,5 +48,29 @@ public static class MerchantParser
             return $"Kontoregulering - {konto.Groups[1].Value}";
 
         return raw.Trim();
+    }
+
+    public static string ParseValle(string raw)
+    {
+        var vipps = Regex.Match(raw, @"^Vipps\*(.+)");
+        if (vipps.Success)
+            return vipps.Groups[1].Value.Trim();
+
+        var datePrefix = Regex.Match(raw, @"^\d{2}\.\d{2}\s+(.+)");
+        if (datePrefix.Success)
+        {
+            var rest = datePrefix.Groups[1].Value;
+            var m = Regex.Match(
+                rest,
+                @"^(.+?)(?:\s+AVD\b|\s+\d{3,}|\s+[A-ZÆØÅ]\d{3,}|\s+[A-ZÆØÅ]{2,4}\s+\S+(?:GATE|GATA|VEG|VN|SVIN|GT)\S*|\s+\S+(?:GATE|GATA|VEG|VN|SVIN|GT)\S*|$)"
+            );
+            return m.Groups[1].Value.Trim();
+        }
+
+        var terminal = Regex.Match(raw, @"^\d+\s+(.+)");
+        if (terminal.Success)
+            return terminal.Groups[1].Value.Trim();
+
+        return Regex.Replace(raw, @"\s*\(\d[\d\s]*\)\s*$", "").Trim();
     }
 }

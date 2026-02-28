@@ -1,48 +1,82 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 public class CsvParser
 {
-    static decimal ParseAmount(string raw, bool negate) =>
-        decimal.TryParse(raw, NumberStyles.Any, CultureInfo.InvariantCulture, out var r)
-            ? (negate ? -r : r)
-            : 6767;
+    private sealed class DnbLineMap : ClassMap<TransactionLine>
+    {
+        public DnbLineMap()
+        {
+            Map(x => x.Dato).Name("Dato");
+            Map(x => x.Forklaring).Name("Forklaring");
+            Map(x => x.Ut).Name("Ut fra konto");
+            Map(x => x.Inn).Name("Inn på konto");
+        }
+    }
 
-    static DateOnly? ParseDate(string raw) => DateOnly.TryParse(raw, out var r) ? r : null;
+    private sealed class ValleLineMap : ClassMap<TransactionLine>
+    {
+        public ValleLineMap()
+        {
+            Map(x => x.Dato).Name("Betalingstidspunkt");
+            Map(x => x.Forklaring).Name("Skildring");
+            Map(x => x.Ut)
+                .Name("Beløp ut")
+                .Convert(r =>
+                {
+                    var raw = r.Row.GetField("Beløp ut");
+                    return decimal.TryParse(
+                        raw,
+                        NumberStyles.Any,
+                        CultureInfo.CurrentCulture,
+                        out var v
+                    )
+                        ? -v
+                        : (decimal?)null;
+                });
+            Map(x => x.Inn).Name("Beløp inn");
+        }
+    }
+
+    static DateOnly? ParseDate(string raw) =>
+        DateOnly.TryParseExact(raw, "dd.MM.yyyy", null, DateTimeStyles.None, out var r) ? r : null;
 
     static string ParseDescription(string raw) => Regex.Replace(raw, @"\s{2,}", " ").Trim();
 
-    public ParsedRow? ParseLine(string l)
+    static ParsedRow? ToRow(TransactionLine line, Func<string, string> parseMerchant)
     {
-        var lArr = l.Replace("\"", "").Split(";");
-
-        if (lArr.Length < 5 || ParseDate(lArr[0]) is not DateOnly date)
+        if (ParseDate(line.Dato) is not DateOnly date)
             return null;
 
-        var merchant = MerchantParser.Parse(lArr[1]);
-        var description = ParseDescription(lArr[1]);
+        var description = ParseDescription(line.Forklaring);
 
-        bool isExpense = string.IsNullOrEmpty(lArr[4]);
-        var rawAmt = isExpense ? lArr[3] : lArr[4];
-        decimal amount = ParseAmount(rawAmt, isExpense);
-
-        return new ParsedRow(date, description, merchant, amount);
+        return new ParsedRow(
+            Date: date,
+            Description: description,
+            Merchant: parseMerchant(description),
+            Amount: line.Ut.HasValue ? -line.Ut.Value : line.Inn ?? 0
+        );
     }
 
-    public List<ParsedRow> ParseRows(StreamReader reader)
+    public List<ParsedRow> Parse(StreamReader stream)
     {
-        reader.ReadLine(); // Skip header
+        var content = stream.ReadToEnd();
+        var firstLine = content.Split('\n')[0];
 
-        var rows = new List<ParsedRow>();
-        string? line;
+        var isValle = firstLine.Contains("Betalingstidspunkt");
 
-        while ((line = reader.ReadLine()) != null)
-        {
-            var row = ParseLine(line);
-            if (row is not null)
-                rows.Add(row);
-        }
+        var cfg = new CsvConfiguration(CultureInfo.CurrentCulture) { Delimiter = ";" };
+        using var csv = new CsvReader(new StringReader(content), cfg);
 
-        return rows;
+        if (isValle)
+            csv.Context.RegisterClassMap<ValleLineMap>();
+        else
+            csv.Context.RegisterClassMap<DnbLineMap>();
+
+        Func<string, string> parseMerchant = isValle ? MerchantParser.ParseValle : MerchantParser.ParseDnb;
+
+        return csv.GetRecords<TransactionLine>().Select(l => ToRow(l, parseMerchant)).Where(r => r is not null).ToList()!;
     }
 }
